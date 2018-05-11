@@ -39,14 +39,14 @@ def put_in_bin(value,mm,bin_count):
         n = bin_count - 1
     return n # this is which bin we should put it in
 
-def single_channel_counting_array(mm,bin_count):
+def single_channel_counting_array(bin_count):
     ou = []
     for i in range(bin_count):
         ou.append(0)
     return ou
 
 def single_channel_sort(indata,index,mm,bin_count):
-    ou = single_channel_counting_array(mm,bin_count)
+    ou = single_channel_counting_array(bin_count)
     for i in range(1,len(indata)): # iterate over all events
         b = put_in_bin(indata[i][index],mm,bin_count)
         # b is which bin we should put this value in
@@ -70,4 +70,40 @@ def single_channel_bins(infile,outfile,channel,bin_count):
     get_bin_width(mm,bin_count)
     sorted = single_channel_sort(indata,index,mm,bin_count)
     ou = single_channel_format(sorted,channel,bin_count,mm)
+    qcsv.to_file(outfile,ou)
+
+def double_channel_counting_array(bin_count1,bin_count2):
+    ou = []
+    for i in range(bin_count1):
+        k = []
+        for j in range(bin_count2):
+            k.append(0)
+        ou.append(k)
+    return ou
+
+def double_channel_sort(indata,index1,index2,mm1,mm2,bin_count1,bin_count2):
+    ou = double_channel_counting_array(bin_count1,bin_count2)
+    for i in range(1,len(indata)):
+        b1 = put_in_bin(indata[i][index1],mm1,bin_count1)
+        b2 = put_in_bin(indata[i][index2],mm2,bin_count2)
+        ou[b1][b2] += 1
+    return ou
+
+def double_channel_format(sorted,channel1,channel2,bin_count1,bin_count2,mm1,mm2):
+    ou = []
+    ou.append(["BINS",2,channel1,bin_count1,mm1["min"],mm2["max"],channel2,bin_count2,mm2["min"],mm2["max"]])
+    for x in sorted:
+        ou.append(x) # each x is already a list
+    return ou
+
+def double_channel_bins(infile,outfile,channel1,bin_count1,channel2,bin_count2):
+    indata = qcsv.from_file(infile)
+    index1 = channel_index(indata,channel1)
+    index2 = channel_index(indata,channel2)
+    mm1 = get_channel_min_max(indata,index1)
+    mm2 = get_channel_min_max(indata,index2)
+    get_bin_width(mm1,bin_count1)
+    get_bin_width(mm2,bin_count2)
+    sorted = double_channel_sort(indata,index1,index2,mm1,mm2,bin_count1,bin_count2)
+    ou = double_channel_format(sorted,channel1,channel2,bin_count1,bin_count2,mm1,mm2)
     qcsv.to_file(outfile,ou)

@@ -30,7 +30,7 @@ channel is an int, referring to a channel, direction is a string, telling the pr
 
 if `direction == "a"` then the program will remove events above value, if `direction == "b"` then the program will remove events below value
 
-`cut.cut(infile,outfile,cutinfo)``
+`cut.cut(infile,outfile,cutinfo)`
 
 infile and outfile are strings, referring to an existing csv source file and a nonexistent output file
 

@@ -24,7 +24,7 @@ the keys indicate a channel to be scaled, and the values are how much to scale a
 
 ## Making Cuts
 
-cut.py contains a class called cut_instruction, the constructor looks like `cut(channel,direction,value)`
+cut.py contains a class called cut_instruction, the constructor looks like `cut.cut_instruction(channel,direction,value)`
 
 channel is an int, referring to a channel, direction is a string, telling the program which direction to cut, and value is a float indicating where the cut should be placed
 

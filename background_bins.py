@@ -37,6 +37,10 @@ def merge_single_channel_sums(source,background):
 
 def single_channel_background_bins(source_infile,background_infile,outfile,channel,bin_count):
     # functions similarly to bins.single_channel_bins
+    # source_infile, background_infile are strings refering to existing files
+    # outfile is a string refering to a nonexistent file
+    # channel (int) indicates which channel to bin
+    # bin_count (int) indicates how many bins to make
     source_indata = qcsv.from_file(source_indata)
     background_indata = qcsv.from_file(background_infile)
     source_index = bins.channel_index(source_indata,channel)

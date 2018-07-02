@@ -12,10 +12,10 @@ def channel_index(indata,channel):
 def get_channel_min_max(indata,index):
     # indata[1] is the first row of data
     # indata[1][index] is the first value that we will consider
-    small = indata[1][index]
-    big = indata[1][index]
+    small = float(indata[1][index])
+    big = small
     for i in range(2,len(indata)): # i=0 is a header, i=1 was just considered above
-        v = indata[i][index]
+        v = float(indata[i][index])
         if v < small:
             small = v
         elif v > big:
@@ -30,7 +30,7 @@ def get_bin_width(mm,bin_count):
     # mm is dict (string->float), output of get_channel_min_max
     # creates new entry in mm
     # this represents the width of each bin
-    mm["width"] ( mm["max"] - mm["min"] ) / float(bin_count)
+    mm["width"] = ( mm["max"] - mm["min"] ) / float(bin_count)
 
 def put_in_bin(value,mm,bin_count):
     n = ( value - mm["min"] ) / mm["width"]
@@ -48,7 +48,7 @@ def single_channel_counting_array(bin_count):
 def single_channel_sort(indata,index,mm,bin_count):
     ou = single_channel_counting_array(bin_count)
     for i in range(1,len(indata)): # iterate over all events
-        b = put_in_bin(indata[i][index],mm,bin_count)
+        b = put_in_bin(float(indata[i][index]),mm,bin_count)
         # b is which bin we should put this value in
         ou[b] += 1
     return ou
@@ -84,8 +84,8 @@ def double_channel_counting_array(bin_count1,bin_count2):
 def double_channel_sort(indata,index1,index2,mm1,mm2,bin_count1,bin_count2):
     ou = double_channel_counting_array(bin_count1,bin_count2)
     for i in range(1,len(indata)):
-        b1 = put_in_bin(indata[i][index1],mm1,bin_count1)
-        b2 = put_in_bin(indata[i][index2],mm2,bin_count2)
+        b1 = put_in_bin(float(indata[i][index1]),mm1,bin_count1)
+        b2 = put_in_bin(float(indata[i][index2]),mm2,bin_count2)
         ou[b1][b2] += 1
     return ou
 

@@ -53,3 +53,27 @@ infile and outfile are strings, referring to an existing csv source file and a n
 channel and bin_count1 are ints that refer to a channel and indicate how many bins to bin that channel into
 
 channe2 and bin_count2 are ints that refer to a different channel and indicate how many bins to bin that channel into
+
+## Background Subtraction
+
+This is done by merging two datasets as they are being binned.
+
+The result is the "source" data without the influence of the "background" data
+
+For a single channel:
+
+`background_bins.single_channel_background_bins(source_infile,background_infile,outfile,channel,bin_count)`
+
+source_infile, background_infile, and outfile are strings, referring to two existing csv source files and one nonexistent output file
+
+channel and bin_count are ints referring indicating which channel to bin and how many bins to bin it into
+
+For two channels:
+
+`background_bins.double_channel_background_bins(source_infile,background_infile,outfile,channel1,bin_count1,channel2,bin_count2)`
+
+source_infile, background_infile, and outfile are strings, referring to two existing csv source files and one nonexistent output file
+
+channel1, bin_count1, channel2, bin_count2 are ints referring indicating which channel to bin and how many bins to bin it into
+
+bin_count1 is the number of bins that channel1 gets divided into, bin_count2 is the number of bins that channel2 gets divided into

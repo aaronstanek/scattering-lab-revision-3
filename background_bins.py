@@ -63,7 +63,7 @@ def single_channel_background_bins(source_infile,background_infile,outfile,chann
     # this is meant to mirror bins.single_channel_bins
     # source_infile, background_infile are string refering to exisitng csv files
     # outfile is a string refering to a nonexistent csv file
-    # channel is an inter refering to a channel
+    # channel is an int refering to a channel
     # bin_count is an int inicating how many bins to make
     source_d = channel_in_common(source_infile,channel)
     background_d = channel_in_common(background_infile,channel)
@@ -138,6 +138,13 @@ def double_channel_backgorund_subtract(source_s,background_s):
     return sorted
 
 def double_channel_background_bins(source_infile,background_infile,outfile,channel1,bin_count1,channel2,bin_count2):
+    # this is meant to mirror bins.double_channel_bins
+    # source_infile, background_infile are string refering to exisitng csv files
+    # outfile is a string refering to a nonexistent csv file
+    # channel1 and channel2 are int refering to a channel
+    # bin_count1 and bin_count2 are int inicating how many bins to make
+    # bin_count1 is the number of bins that channel1 gets divided into
+    # bin_count2 is the number of bins that channel2 gets divided into
     source_d = channel_in_common_2(source_infile,channel1,channel2)
     background_d = channel_in_common_2(background_infile,channel1,channel2)
     mm1 = merge_min_max(source_d["mm1"],background_d["mm1"])

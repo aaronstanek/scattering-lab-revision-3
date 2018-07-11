@@ -146,6 +146,10 @@ def double_channel_format(ex):
     return ou
 
 def double_channel(infile,outfile,**args):
+    # infile is a string that refers to an existing csv file in the BINS format
+    # outfile is a string that refers to a file
+    # args may optionally contain min_x, min_y, max_x, max_y
+    # these are floats that can be used to narrow the search space
     indata = qcsv.from_file(infile)
     double_channel_confirm_format(indata)
     mm = double_channel_get_mm(indata)

@@ -77,3 +77,27 @@ source_infile, background_infile, and outfile are strings, referring to two exis
 channel1, bin_count1, channel2, bin_count2 are ints referring indicating which channel to bin and how many bins to bin it into
 
 bin_count1 is the number of bins that channel1 gets divided into, bin_count2 is the number of bins that channel2 gets divided into
+
+## Finding Extrema in Binned Data
+
+It may be useful to find the bin with the maximum or minimum value.
+
+For a single channel:
+
+`extrema.single_channel(infile,outfile,**args)`
+
+infile is a string that refers to an existing csv file that is the output of bins or background_bins
+
+outfile is a nonexistent file where the results will go
+
+args is an optional parameter, it may contain "min" and/or "max", these are floats that can be used indicate a minimum or maximum integration sum to be searched
+
+For two channels:
+
+`extrema.double_channel(infile,outfile,**args)`
+
+infile is a string that refers to an existing csv file that is the output of bins or background_bins
+
+outfile is a nonexistent file where the results will go
+
+args is an optional parameter, it may contain "min_x", "min_y", "max_x", and/or "max_y", these are floats that can be used indicate a minimum or maximum integration sum to be searched

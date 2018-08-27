@@ -32,7 +32,7 @@ def sig_figs(num,sf):
     ou = ou + str(oul[0]) + "." + str(oul[1]) + str(oul[2]) + "e" + str(p-1)
     return ou
 
-def single_channel_set_arg_values(args):
+def set_arg_values(args):
     ou = dict()
     for p in ["x_label","y_label","title"]:
         if p in args:
@@ -46,7 +46,7 @@ def single_channel_set_arg_values(args):
     return ou
 
 def single_channel(infile,outfile,**args):
-    v = single_channel_set_arg_values(args)
+    v = set_arg_values(args)
     indata = qcsv.from_file(infile)
     ex.single_channel_confirm_format(indata)
     mm = ex.single_channel_get_mm(indata)
@@ -67,4 +67,30 @@ def single_channel(infile,outfile,**args):
     y_pos = np.arange(len(values))
     plt.bar(y_pos, values, align='center')
     plt.xticks(y_pos,names)
+    plt.savefig(outfile)
+
+def double_channel_make_table(d):
+    ou = []
+    for i in range(1,len(d)):
+        k = []
+        for j in range(len(d[i])):
+            k.append(float(d[i][j]))
+        ou.append(k)
+    return ou
+
+def double_channel(infile,outfile,**args):
+    v = set_arg_values(args)
+    indata = qcsv.from_file(infile)
+    ex.double_channel_confirm_format(indata)
+    mm = ex.double_channel_get_mm(indata)
+    bounds = [ mm["x"]["min"], mm["x"]["max"], mm["y"]["min"], mm["y"]["max"] ]
+    table = double_channel_make_table(indata)
+    # now plot it
+    plt.figure(1)
+    plt.clf()
+    plt.title(v["title"])
+    plt.xlabel(v["x_label"])
+    plt.ylabel(v["y_label"])
+    plt.imshow(table, cmap="hot", origin="lower", extent=bounds)
+    plt.colorbar()
     plt.savefig(outfile)

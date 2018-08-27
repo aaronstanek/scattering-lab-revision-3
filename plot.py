@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import extrema as ex
 
 def sig_figs(num,sf):
+    # takes a float (num) and returns it as a string with sf (int) many significant figures
     if num == 0:
         return "0.00e0"
     if num > 0:
@@ -33,6 +34,11 @@ def sig_figs(num,sf):
     return ou
 
 def set_arg_values(args):
+    # takes a dict (string->string,int)
+    # copys specific values from the input dict into an output dict
+    # if one of those specific values is not present in the input, a default value is given to the output
+    # the keys that are guaranteed in the output are:
+    # "x_label", "y_label", "title", "label_spacing"
     ou = dict()
     for p in ["x_label","y_label","title"]:
         if p in args:
@@ -46,6 +52,12 @@ def set_arg_values(args):
     return ou
 
 def single_channel(infile,outfile,**args):
+    # infile is a string refering to a csv file with binned data
+    # outfile is a string indicating a nonexistent file that the output should be saved to
+    # outfile should end in .png
+    # this function makes a plot of the data in infile and saves it to outfile
+    # args may contain "title", "x_label", "y_label", "label_spacing"
+    # these are string, string, string, and int
     v = set_arg_values(args)
     indata = qcsv.from_file(infile)
     ex.single_channel_confirm_format(indata)
@@ -70,6 +82,9 @@ def single_channel(infile,outfile,**args):
     plt.savefig(outfile)
 
 def double_channel_make_table(d):
+    # when the data is loaded from the csv file, each datapoint is encoded as a string
+    # we want to turn them into floats
+    # that's what this function does
     ou = []
     for i in range(1,len(d)):
         k = []
@@ -79,6 +94,12 @@ def double_channel_make_table(d):
     return ou
 
 def double_channel(infile,outfile,**args):
+    # infile is a string refering to a csv file with binned data
+    # outfile is a string indicating a nonexistent file that the output should be saved to
+    # outfile should end in .png
+    # this function makes a plot of the data in infile and saves it to outfile
+    # args may contain "title", "x_label", "y_label"
+    # all three are strings
     v = set_arg_values(args)
     indata = qcsv.from_file(infile)
     ex.double_channel_confirm_format(indata)

@@ -78,6 +78,34 @@ channel1, bin_count1, channel2, bin_count2 are ints referring indicating which c
 
 bin_count1 is the number of bins that channel1 gets divided into, bin_count2 is the number of bins that channel2 gets divided into
 
+## Plotting Binned Data
+
+To make a plot of a single channel:
+
+`plot.single_channel(infile,outfile,**args)`
+
+infile is a string that refers to an existing csv file that is the output of bins or background_bins
+
+outfile is a nonexistent file where the plot will be saved, this needs to have a filename extension of a image filetype, only .png has been tested
+
+args is an optional parameter, it may contain "title", "x_label", "y_label", and/or "label_spacing"
+
+use args["title"], args["x_label"], args["y_label"] to label the output plot, they are strings
+
+use args["label_spacing"] to control how many numbers appear on the horizontal axis, it is an integer, if this value is 1, then every bin will have a number label, it is 2, then every other bin will have a number, if 3, every third bin, and so on
+
+To make a plot of binned data with two channels:
+
+`plot.double_channel(infile,outfile,**args)`
+
+infile is a string that refers to an existing csv file that is the output of bins or background_bins
+
+outfile is a nonexistent file where the plot will be saved, this needs to have a filename extension of a image filetype, only .png has been tested
+
+args is an optional parameter, it may contain "title", "x_label", and/or "y_label"
+
+use args["title"], args["x_label"], args["y_label"] to label the output plot, they are strings
+
 ## Finding Extrema in Binned Data
 
 It may be useful to find the bin with the maximum or minimum value.
